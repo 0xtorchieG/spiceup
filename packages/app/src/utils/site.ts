@@ -1,6 +1,3 @@
-export const SITE_NAME = 'Nexth'
-export const SITE_DESCRIPTION = 'Quickly ship Web3 Apps ⚡'
-export const SITE_URL = 'https://nexth.vercel.app'
-
-export const SOCIAL_TWITTER = 'wslyvh'
-export const SOCIAL_GITHUB = 'wslyvh/nexth'
+export const SITE_NAME = 'Spiceup'
+export const SITE_DESCRIPTION = 'The web3 sports engagement app'
+export const SITE_URL = 'spiceup-app.vercel.app'
