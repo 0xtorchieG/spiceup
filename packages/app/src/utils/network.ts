@@ -1,7 +1,6 @@
-import {spicy, arbitrum, Chain } from 'viem/chains'
+import { spicy, arbitrum, Chain } from 'viem/chains'
 
 let chains = [spicy, arbitrum] as [Chain, ...Chain[]]
-
 
 export const ETH_CHAINS = chains
 

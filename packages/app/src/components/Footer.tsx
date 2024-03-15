@@ -1,5 +1,5 @@
 import React from 'react'
-import { SITE_DESCRIPTION} from '@/utils/site'
+import { SITE_DESCRIPTION } from '@/utils/site'
 import { FaGithub, FaXTwitter } from 'react-icons/fa6'
 import { NetworkStatus } from './NetworkStatus'
 import { LinkComponent } from './LinkComponent'
