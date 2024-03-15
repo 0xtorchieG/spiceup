@@ -4,8 +4,9 @@ import React, { useEffect, useState } from 'react'
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined'
 import { contractAddress, spiceUpAbi } from '@/utils/contractDetails'
 import Link from 'next/link'
-import { type BaseError, useAccount, useBalance, useWaitForTransactionReceipt, useWriteContract } from 'wagmi'
+import { type BaseError, useAccount, useWaitForTransactionReceipt, useWriteContract } from 'wagmi'
 import { parseEther } from 'viem'
+import { fantokenList } from '@/utils/fanTokens'
 
 export default function Home() {
   // Define state variables to store form input values
@@ -104,7 +105,12 @@ export default function Home() {
           <div className='card-actions justify-end'>
             <button
               className='btn btn-secondary'
-              onClick={() => document.getElementById('my_modal_5').showModal()}
+              onClick={() => {
+                const modal = document.getElementById('my_modal_5') as HTMLDialogElement
+                if (modal) {
+                  modal.showModal()
+                }
+              }}
               disabled={!isConnected}>
               {isConnected ? 'Create new challenge' : 'Connect your wallet to create challenge'}
             </button>
@@ -126,7 +132,6 @@ export default function Home() {
                   placeholder='Challenge title'
                   required
                 />
-                {challengeType !== undefined && challengeMetric[challengeType]}
               </label>
             </div>
             <div className='flex justify-stretch content-center h-10'>
@@ -203,7 +208,7 @@ export default function Home() {
                   placeholder='100'
                   required
                 />
-                {challengeType !== undefined && challengeMetric[challengeType]}
+                {challengeType !== undefined && challengeMetric[challengeType as keyof typeof challengeMetric]}
               </label>
             </div>
             <div className='flex justify-start content-center h-10'>
@@ -245,14 +250,18 @@ export default function Home() {
             {tokenGating && (
               <label className='input input-bordered flex items-center gap-2'>
                 Token address:
-                <input
-                  type='text'
+                <select
                   className='grow'
-                  placeholder='0x...'
                   value={tokenForGating}
                   onChange={(e) => setTokenForGating(e.target.value)}
-                  required={tokenGating}
-                />
+                  required={tokenGating}>
+                  <option value=''>Select a token...</option>
+                  {Object.entries(fantokenList).map(([key, value]) => (
+                    <option key={key} value={value as `0x${string}`}>
+                      {key}
+                    </option>
+                  ))}
+                </select>
               </label>
             )}
             <div className='modal-action'>
@@ -261,7 +270,10 @@ export default function Home() {
               </button>
               <button
                 onClick={() => {
-                  document.getElementById('my_modal_5').close()
+                  const modal = document.getElementById('my_modal_5') as HTMLDialogElement
+                  if (modal) {
+                    modal.close()
+                  }
                   resetForm()
                 }}
                 type='button'
@@ -271,7 +283,7 @@ export default function Home() {
             </div>
             <div>
               {error && (
-                <div role='alert' className='alert alert-error'>
+                <div role='alert' className='alert alert-error mt-1'>
                   <svg
                     xmlns='http://www.w3.org/2000/svg'
                     className='stroke-current shrink-0 h-6 w-6'
@@ -288,7 +300,7 @@ export default function Home() {
                 </div>
               )}
               {hash && (
-                <div role='alert' className='alert alert-success'>
+                <div role='alert' className='alert alert-success mt-1'>
                   <svg
                     xmlns='http://www.w3.org/2000/svg'
                     className='stroke-current shrink-0 h-6 w-6'
@@ -310,7 +322,7 @@ export default function Home() {
               )}
               {isConfirming && <div>Waiting for confirmation...</div>}
               {isConfirmed && (
-                <div role='alert' className='alert alert-success'>
+                <div role='alert' className='alert alert-success mt-1'>
                   <svg
                     xmlns='http://www.w3.org/2000/svg'
                     className='stroke-current shrink-0 h-6 w-6'
