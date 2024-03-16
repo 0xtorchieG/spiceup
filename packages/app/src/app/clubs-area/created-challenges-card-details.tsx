@@ -54,7 +54,7 @@ const ChallengeDetails: React.FC<{ challengeId: number }> = (props) => {
                       {index + 1}
                     </td>
                     <td>
-                      <Link href={`https://testnet.bscscan.com/address/${address}`} target='_blank'>
+                      <Link href={`https://testnet.chiliscan.com/address/${address}`} target='_blank'>
                         {address.slice(0, 4) + '...' + address.slice(-5)}
                       </Link>
                     </td>
