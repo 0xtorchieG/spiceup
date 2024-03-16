@@ -57,7 +57,7 @@ const ChallengeDetails: React.FC<{ challengeId: number; challengeLive: boolean }
             <tbody>
               {topTenAddresses.map((address, index) =>
                 topTenScores[index].toString() !== '0' ? (
-                  <tr key={address} className={address === connectedAddress ? 'bg-accent' : ''}>
+                  <tr key={address} className={address === connectedAddress ? 'bg-primary' : ''}>
                     <td>
                       {index === 0 && '🥇'}
                       {index === 1 && '🥈'}

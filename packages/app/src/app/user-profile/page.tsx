@@ -4,6 +4,7 @@ import { useRouter, useSearchParams } from 'next/navigation'
 import { useCallback, useEffect, useState } from 'react'
 import StravaAuth from './strava-auth'
 import StravaProfile from './strava-profile'
+import OnchainProfile from './onchain-profile'
 
 export default function Home() {
   const searchParams = useSearchParams()
@@ -31,6 +32,7 @@ export default function Home() {
 
   return (
     <div className='container m-5 min-h-full w-full'>
+      <OnchainProfile />
       <div className='rounded-lg'>
         {stravaConnected === false && <StravaAuth />}
         {stravaConnected === true && <StravaProfile />}
