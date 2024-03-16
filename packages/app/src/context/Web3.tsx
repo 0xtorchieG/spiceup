@@ -31,7 +31,7 @@ const evmNetworks = [
     blockExplorerUrls: ['https://testnet.chiliscan.com/'],
     chainId: 88882,
     chainName: 'Chiliz Spicy Testnet',
-    iconUrls: ['https://app.dynamic.xyz/assets/networks/eth.svg'],
+    iconUrls: ['/images/chiliz_logo.svg'],
     name: 'Chiliz Spicy Testnet',
     nativeCurrency: {
       decimals: 18,
