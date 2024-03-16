@@ -76,7 +76,6 @@ export async function POST(req: NextRequest) {
   // Set the cookie
   const maxAgeInSeconds = stravaToken.expires_in
   const cookieValue = `accessToken=${token}; Max-Age=${maxAgeInSeconds}; Path=/; HttpOnly`
-  console.log(cookieValue)
   const headers = { 'Set-Cookie': cookieValue }
 
   const result = { accessToken: token }
