@@ -139,7 +139,7 @@ const Card: React.FC<CardProps> = ({ challengeId, address }) => {
           </figure>
           <div className='card-body max-w-sm'>
             <h2 className='card-title text-lg'>
-              {challenge.title}
+              {challenge.title.slice(0, 10)}
               <div className='badge badge-accent'>ID: {challengeId}</div>
             </h2>
             <div>

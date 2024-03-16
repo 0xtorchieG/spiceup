@@ -1,4 +1,6 @@
-import React, { PropsWithChildren } from 'react'
+'use client'
+
+import React, { PropsWithChildren, useState, useEffect } from 'react'
 import { Header } from './Header'
 import { Footer } from './Footer'
 import Link from 'next/link'
@@ -6,8 +8,55 @@ import SportsSoccerOutlinedIcon from '@mui/icons-material/SportsSoccerOutlined'
 import WorkspacePremiumOutlinedIcon from '@mui/icons-material/WorkspacePremiumOutlined'
 import AccountBoxOutlinedIcon from '@mui/icons-material/AccountBoxOutlined'
 import { ThemeToggle } from './ThemeToggle'
+import { createSmartAccount } from '@/utils/biconomy'
+import { useUserWallets } from '@dynamic-labs/sdk-react-core'
+import { ChainId } from '@biconomy/core-types'
 
 export function Layout(props: PropsWithChildren) {
+  const [provider, setProvider] = useState(null)
+  const [signer, setSigner] = useState(null)
+  const [smartAccount, setSmartAccount] = useState<any>()
+
+  const userWallets = useUserWallets()
+
+  useEffect(() => {
+    const fetchClients = async (embeddedWallet: any) => {
+      if (embeddedWallet.chain !== ChainId.CHILIZ_TESTNET) {
+        await embeddedWallet.connector.switchNetwork({
+          networkChainId: ChainId.CHILIZ_TESTNET,
+        })
+      }
+
+      const newProvider = await embeddedWallet.connector?.getPublicClient()
+      const newSigner = await embeddedWallet.connector?.ethers?.getSigner()
+
+      setProvider(newProvider)
+      setSigner(newSigner)
+
+      return
+    }
+
+    if (userWallets.length > 0 && (!provider || !signer)) {
+      const embeddedWallet = userWallets.find((wallet) => wallet?.connector?.isEmbeddedWallet === true)
+
+      if (embeddedWallet) {
+        fetchClients(embeddedWallet)
+      }
+    }
+  }, [userWallets, provider, signer])
+
+  useEffect(() => {
+    const createAndSetSmartAccount = async () => {
+      const newSmartAccount = await createSmartAccount(provider, signer)
+      setSmartAccount(newSmartAccount)
+      console.log(newSmartAccount)
+    }
+
+    if (provider && signer && !smartAccount) {
+      createAndSetSmartAccount()
+    }
+  }, [provider, signer, smartAccount])
+
   return (
     <div className='flex flex-col min-h-screen bg-base-200'>
       <div className='drawer lg:drawer-open z-30'>

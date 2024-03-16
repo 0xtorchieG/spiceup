@@ -23,6 +23,11 @@
     ]
   },
   "dependencies": {
+    "@biconomy/account": "^3.1.2",
+    "@biconomy/bundler": "^3.1.2",
+    "@biconomy/common": "^3.1.2",
+    "@biconomy/core-types": "^3.1.2",
+    "@biconomy/paymaster": "^3.1.2",
     "@dynamic-labs/ethereum": "^2.0.0-alpha.10",
     "@dynamic-labs/ethers-v6": "^2.0.0-alpha.10",
     "@dynamic-labs/sdk-react-core": "^2.0.0-alpha.10",
