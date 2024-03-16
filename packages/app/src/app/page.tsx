@@ -1,15 +1,31 @@
-import { LinkComponent } from '@/components/LinkComponent'
-import { SITE_DESCRIPTION } from '@/utils/site'
+import React from 'react'
+import Link from 'next/link'
 
 export default function Home() {
   return (
     <>
-      <h2 className='text-lg'>Next.js + Ethereum starter kit</h2>
-      <p>{SITE_DESCRIPTION}</p>
-
-      <p className='mt-4'>
-        <LinkComponent href='/examples'>View examples</LinkComponent> to bootstrap development.
-      </p>
+      <div className='hero w-full min-h-screen bg-base-200'>
+        <div className='hero-content w-full flex-col lg:flex-row'>
+          <img
+            src='/images/hero_image_spiceup.png'
+            alt='SpiceUp Hero Image'
+            className='max-w-sm rounded-lg shadow-2xl'
+          />
+          <div>
+            <h1 className='text-5xl font-bold'>Get up! Spice up!</h1>
+            <p className='py-6'>
+              Join your favorite sport clubs&apos; challenges in getting the fanbase more active and healthy. <br />
+              Win the championships and earn fan tokens.
+            </p>
+            <Link href='/user-profile'>
+              <button className='btn btn-primary mr-4'>Get active</button>
+            </Link>
+            <Link href='/challenges'>
+              <button className='btn btn-primary'>Check challenges</button>
+            </Link>
+          </div>
+        </div>
+      </div>
     </>
   )
 }
