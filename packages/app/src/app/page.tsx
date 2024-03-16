@@ -15,7 +15,8 @@ export default function Home() {
             <h1 className='text-5xl font-bold'>Get up! Show up! Spice up!</h1>
             <p className='py-6'>
               Join your favorite sport clubs&apos; challenges in getting the fanbase more active and healthy. <br />
-              Win the championships and earn fan tokens.
+              Level up yourself! <br />
+              Win the championships and earn CHZ tokens.
             </p>
             <Link href='/user-profile'>
               <button className='btn btn-primary mr-4'>Get active</button>
