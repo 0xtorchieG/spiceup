@@ -8,6 +8,7 @@ import { contractAddress, spiceUpAbi } from '@/utils/contractDetails'
 import { erc20Abi } from '@/utils/fanTokens'
 import LockOpenIcon from '@mui/icons-material/LockOpen'
 import LockPersonIcon from '@mui/icons-material/LockPerson'
+import ChallengeDetails from './challenge-details'
 
 interface Challenge {
   id: bigint
@@ -238,7 +239,7 @@ const Card: React.FC<CardProps> = ({ challengeId }) => {
                     </div>
                   </Link>
                 ) : (
-                  <div className='badge badge-outline badge-accent badge-lg'>
+                  <div className='badge badge-outline badge-secondary badge-lg'>
                     <LockOpenIcon fontSize='small' />
                     Open
                   </div>
@@ -284,6 +285,13 @@ const Card: React.FC<CardProps> = ({ challengeId }) => {
                     </div>
                   )}
                 </button>
+              )}
+            </div>
+            <div>
+              {buttonLabel !== 'Not yet started' ? (
+                <ChallengeDetails challengeId={challengeId} challengeLive={challengeLiveChecker} />
+              ) : (
+                ''
               )}
             </div>
           </div>
