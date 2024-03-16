@@ -5,6 +5,7 @@ import Link from 'next/link'
 import SportsSoccerOutlinedIcon from '@mui/icons-material/SportsSoccerOutlined'
 import WorkspacePremiumOutlinedIcon from '@mui/icons-material/WorkspacePremiumOutlined'
 import AccountBoxOutlinedIcon from '@mui/icons-material/AccountBoxOutlined'
+import { ThemeToggle } from './ThemeToggle'
 
 export function Layout(props: PropsWithChildren) {
   return (
@@ -43,6 +44,8 @@ export function Layout(props: PropsWithChildren) {
                 <p>Clubs area</p>
               </Link>
             </li>
+            <div className='divider'>Toggle theme</div>
+            <ThemeToggle />
           </ul>
         </div>
       </div>

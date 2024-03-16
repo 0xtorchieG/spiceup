@@ -4,7 +4,7 @@ import Link from 'next/link'
 export default function Home() {
   return (
     <>
-      <div className='hero w-full min-h-screen bg-base-200'>
+      <div className='hero w-full min-h-screen bg-base-100'>
         <div className='hero-content w-full flex-col lg:flex-row'>
           <img
             src='/images/hero_image_spiceup.png'

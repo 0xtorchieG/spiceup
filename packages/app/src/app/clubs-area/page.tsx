@@ -7,6 +7,7 @@ import Link from 'next/link'
 import { type BaseError, useAccount, useWaitForTransactionReceipt, useWriteContract } from 'wagmi'
 import { parseEther } from 'viem'
 import { fantokenList } from '@/utils/fanTokens'
+import CreatedChallenges from './created-challenges'
 
 export default function Home() {
   // Define state variables to store form input values
@@ -104,7 +105,7 @@ export default function Home() {
           <p>Your fans can get as ripped as their role models.</p>
           <div className='card-actions justify-end'>
             <button
-              className='btn btn-secondary'
+              className='btn btn-primary btn-outline'
               onClick={() => {
                 const modal = document.getElementById('my_modal_5') as HTMLDialogElement
                 if (modal) {
@@ -342,6 +343,7 @@ export default function Home() {
           </form>
         </div>
       </dialog>
+      <CreatedChallenges />
     </div>
   )
 }
