@@ -12,7 +12,7 @@ export default function Home() {
             className='max-w-sm rounded-lg shadow-2xl'
           />
           <div>
-            <h1 className='text-5xl font-bold'>Get up! Spice up!</h1>
+            <h1 className='text-5xl font-bold'>Get up! Show up! Spice up!</h1>
             <p className='py-6'>
               Join your favorite sport clubs&apos; challenges in getting the fanbase more active and healthy. <br />
               Win the championships and earn fan tokens.
