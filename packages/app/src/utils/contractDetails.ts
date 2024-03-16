@@ -1,4 +1,4 @@
-export const contractAddress = '0x656FAEd14a69EcA9A3F5F7696bbee4FB29d5835c'
+export const contractAddress = '0xd042203fdd3226F268F341a38aff5db635C5Bf09'
 
 export const spiceUpAbi = [
   {
@@ -90,49 +90,6 @@ export const spiceUpAbi = [
     type: 'event',
   },
   {
-    inputs: [
-      {
-        internalType: 'string',
-        name: '_title',
-        type: 'string',
-      },
-      {
-        internalType: 'uint256',
-        name: '_goalValue',
-        type: 'uint256',
-      },
-      {
-        internalType: 'uint256',
-        name: '_startTime',
-        type: 'uint256',
-      },
-      {
-        internalType: 'uint256',
-        name: '_durationSeconds',
-        type: 'uint256',
-      },
-      {
-        internalType: 'address',
-        name: '_tokenAddress',
-        type: 'address',
-      },
-      {
-        internalType: 'enum RunningChallenge.ChallengeType',
-        name: '_challengeType',
-        type: 'uint8',
-      },
-      {
-        internalType: 'bool',
-        name: '_tokenGateEnabled',
-        type: 'bool',
-      },
-    ],
-    name: 'createChallenge',
-    outputs: [],
-    stateMutability: 'payable',
-    type: 'function',
-  },
-  {
     anonymous: false,
     inputs: [
       {
@@ -152,41 +109,27 @@ export const spiceUpAbi = [
     type: 'event',
   },
   {
-    inputs: [],
-    name: 'renounceOwnership',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'uint256',
-        name: '_challengeId',
-        type: 'uint256',
-      },
-      {
-        internalType: 'bool',
-        name: '_active',
-        type: 'bool',
-      },
-    ],
-    name: 'setChallengeActive',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
     inputs: [
       {
         internalType: 'address',
-        name: 'newOwner',
+        name: '',
         type: 'address',
       },
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
     ],
-    name: 'transferOwnership',
-    outputs: [],
-    stateMutability: 'nonpayable',
+    name: 'activityLogged',
+    outputs: [
+      {
+        internalType: 'bool',
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'view',
     type: 'function',
   },
   {
@@ -288,6 +231,131 @@ export const spiceUpAbi = [
     type: 'function',
   },
   {
+    inputs: [
+      {
+        internalType: 'address',
+        name: '',
+        type: 'address',
+      },
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    name: 'challengesEnteredByParticipant',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: '_challengeId',
+        type: 'uint256',
+      },
+    ],
+    name: 'claimFee',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: '_challengeId',
+        type: 'uint256',
+      },
+    ],
+    name: 'claimPrize',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: '',
+        type: 'address',
+      },
+    ],
+    name: 'claimedPrizesAmount',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'string',
+        name: '_title',
+        type: 'string',
+      },
+      {
+        internalType: 'uint256',
+        name: '_goalValue',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: '_startTime',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: '_durationSeconds',
+        type: 'uint256',
+      },
+      {
+        internalType: 'address',
+        name: '_tokenAddress',
+        type: 'address',
+      },
+      {
+        internalType: 'enum RunningChallenge.ChallengeType',
+        name: '_challengeType',
+        type: 'uint8',
+      },
+      {
+        internalType: 'bool',
+        name: '_tokenGateEnabled',
+        type: 'bool',
+      },
+    ],
+    name: 'createChallenge',
+    outputs: [],
+    stateMutability: 'payable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: '_challengeId',
+        type: 'uint256',
+      },
+    ],
+    name: 'enterChallenge',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
     inputs: [],
     name: 'getChallengesCount',
     outputs: [
@@ -320,6 +388,72 @@ export const spiceUpAbi = [
     type: 'function',
   },
   {
+    inputs: [
+      {
+        internalType: 'address',
+        name: '_participant',
+        type: 'address',
+      },
+    ],
+    name: 'getChallengesEnteredByParticipant',
+    outputs: [
+      {
+        internalType: 'uint256[]',
+        name: '',
+        type: 'uint256[]',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: '_challengeId',
+        type: 'uint256',
+      },
+    ],
+    name: 'getLeaderboard',
+    outputs: [
+      {
+        internalType: 'address[]',
+        name: '',
+        type: 'address[]',
+      },
+      {
+        internalType: 'uint256[]',
+        name: '',
+        type: 'uint256[]',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: '_challengeId',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: '_value',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: '_activityId',
+        type: 'uint256',
+      },
+    ],
+    name: 'logValue',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
     inputs: [],
     name: 'owner',
     outputs: [
@@ -330,6 +464,68 @@ export const spiceUpAbi = [
       },
     ],
     stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+      {
+        internalType: 'address',
+        name: '',
+        type: 'address',
+      },
+    ],
+    name: 'participantEntered',
+    outputs: [
+      {
+        internalType: 'bool',
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'renounceOwnership',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: '_challengeId',
+        type: 'uint256',
+      },
+      {
+        internalType: 'bool',
+        name: '_active',
+        type: 'bool',
+      },
+    ],
+    name: 'setChallengeActive',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'newOwner',
+        type: 'address',
+      },
+    ],
+    name: 'transferOwnership',
+    outputs: [],
+    stateMutability: 'nonpayable',
     type: 'function',
   },
 ] as const
