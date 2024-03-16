@@ -5,7 +5,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { type BaseError, useReadContract, useAccount, useWriteContract, useWaitForTransactionReceipt } from 'wagmi'
 import { contractAddress, spiceUpAbi } from '@/utils/contractDetails'
-import { erc20Abi } from '@/utils/fanTokens'
+import { erc20Abi, fanTokenAbi } from '@/utils/fanTokens'
 import LockOpenIcon from '@mui/icons-material/LockOpen'
 import LockPersonIcon from '@mui/icons-material/LockPerson'
 import ChallengeDetails from './challenge-details'
@@ -35,7 +35,7 @@ const Card: React.FC<CardProps> = ({ challengeId }) => {
   const [hasEntered, setHasEntered] = useState<boolean>(false)
   const [buttonLabel, setButtonLabel] = useState<string>('')
   const [tokenForGating, setTokenForGating] = useState<string>()
-  const [ownsGatingToken, setOwnsGatingToken] = useState<boolean>()
+  const [ownsGatingToken, setOwnsGatingToken] = useState<boolean>(false)
   const [imageURL, setImageURL] = useState<string>('')
 
   const challengeTypes = ['Run: Distance', 'Run: Time', 'Heartrate']
@@ -63,7 +63,7 @@ const Card: React.FC<CardProps> = ({ challengeId }) => {
 
   const hasBalance = useReadContract({
     address: tokenForGating as `0x${string}`,
-    abi: erc20Abi,
+    abi: fanTokenAbi,
     functionName: 'balanceOf',
     args: [address as `0x${string}`],
   })
@@ -167,7 +167,9 @@ const Card: React.FC<CardProps> = ({ challengeId }) => {
 
   useEffect(() => {
     if (hasBalance.data !== undefined) {
-      setOwnsGatingToken(true)
+      if (Number(hasBalance.data) > 0) {
+        setOwnsGatingToken(true)
+      }
     }
   }, [hasBalance.data])
 
