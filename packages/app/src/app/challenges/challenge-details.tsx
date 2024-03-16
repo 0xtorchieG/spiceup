@@ -4,12 +4,14 @@ import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { useReadContract, useAccount } from 'wagmi'
 import { contractAddress, spiceUpAbi } from '@/utils/contractDetails'
+import ClaimPrize from './claim-prize'
 
 const ChallengeDetails: React.FC<{ challengeId: number; challengeLive: boolean }> = (props) => {
   const { challengeId, challengeLive } = props
   const [topTenAddresses, setTopTenAddresses] = useState<readonly `0x${string}`[]>([])
   const [topTenScores, setTopTenAddressesScores] = useState<readonly bigint[]>([])
   const [isInTopTen, setIsInTopTen] = useState<boolean>()
+  const [position, setPosition] = useState<number>(10)
 
   const { address } = useAccount()
   const connectedAddress = address
@@ -41,6 +43,7 @@ const ChallengeDetails: React.FC<{ challengeId: number; challengeLive: boolean }
           <summary className='collapse-title'>🏅 Stats 🏅 </summary>
         </div>
         <div className='collapse-content'>
+          {position < 3 && !challengeLive && <ClaimPrize challengeId={challengeId} position={position} />}
           <h3 className='font-bold text-lg'>Top 10 participants</h3>
           {isInTopTen && challengeLive && <h3 className='font-bold text-sm'>🎉 You are killing it</h3>}
           <table className='table table-zebra'>
