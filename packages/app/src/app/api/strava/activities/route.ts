@@ -1,9 +1,9 @@
 import { cookies } from 'next/headers'
 import jwt from 'jsonwebtoken'
-// import { NextApiRequest, NextApiResponse } from 'next'
 import { NextResponse, NextRequest } from 'next/server'
 import { AuthRepository } from '../../../strava-modules/auth/AuthRepository'
 import stravaV3, { DetailedActivityResponse } from 'strava-v3'
+import { supabase } from '@/utils/supabase'
 
 export async function POST(req: NextRequest) {
   if (req.method !== 'POST') {
@@ -33,7 +33,6 @@ export async function POST(req: NextRequest) {
     })
   }
 
-  const authRepository = new AuthRepository()
   const decodedAccessToken = jwt.decode(accessToken)
 
   if (decodedAccessToken === null || typeof decodedAccessToken === 'string') {
@@ -43,9 +42,14 @@ export async function POST(req: NextRequest) {
     })
   }
 
-  const auth = authRepository.readAuth(decodedAccessToken.id)
+  const { data: auth, error: authError } = await supabase
+    .from('auth')
+    .select()
+    .eq('userId', decodedAccessToken.id)
+    .single()
 
-  if (!auth) {
+  if (!auth || authError) {
+    console.error(authError?.message || 'Auth information not found')
     const result = { message: 'Auth invalid' }
     return NextResponse.json(result, {
       status: 401,
