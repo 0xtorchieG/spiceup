@@ -31,7 +31,6 @@ export const createSmartAccount = async (provider: any, signer: any) => {
   const validationModule = await createValidationModule(signer)
 
   return await BiconomySmartAccountV2.create({
-    provider: provider, // This can be any ethers JsonRpcProvider connected to your app's network
     chainId: ChainId.CHILIZ_TESTNET, // Replace this with your target network
     bundler: bundler, // Use the `bundler` we initialized above
     paymaster: paymaster, // Use the `paymaster` we initialized above

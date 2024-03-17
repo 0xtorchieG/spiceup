@@ -4,12 +4,16 @@ import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { useReadContract, useReadContracts } from 'wagmi'
 import { contractAddress, spiceUpAbi } from '@/utils/contractDetails'
-// import { config } from '@/utils/network'
 import Card from './challenge-card'
+import { useSmartAccount } from '../../components/Layout'
 
 export default function Home() {
   const [challengeCount, setChallengeCount] = useState<number>()
   const [challengeIds, setChallengeIds] = useState<number[]>([])
+
+  const smartAccount = useSmartAccount()
+  console.log('the smartAccount is')
+  console.log(smartAccount)
 
   const getChallengeCount = useReadContract({
     abi: spiceUpAbi,
@@ -30,6 +34,7 @@ export default function Home() {
   return (
     <div className='p-8 ml-0'>
       <h1 className='font-bold text-xl'>All challenges</h1>
+      {smartAccount && <p>Smart Account Address: {smartAccount.entryPointAddress}</p>}
       <div className='grid grid-cols-3 gap-6'>
         {challengeIds.map((challengeId) => (
           <Card key={challengeId} challengeId={challengeId} />

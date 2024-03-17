@@ -6,14 +6,12 @@ import { ToastProvider } from '@/context/Toaster'
 import { type ReactNode, useEffect, useState } from 'react'
 import '../assets/globals.css'
 
-
 export const metadata: Metadata = {
   title: SITE_NAME,
   description: SITE_DESCRIPTION,
 }
 
 export default function RootLayout(props: { children: ReactNode }) {
-
   return (
     <html lang='en'>
       <body>
