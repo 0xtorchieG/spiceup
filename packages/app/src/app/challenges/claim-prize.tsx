@@ -26,7 +26,7 @@ const ClaimPrize: React.FC<{ challengeId: number; position: number }> = (props) 
 
   return (
     <div className='mb-3'>
-      <h2 className='font-bold text-lg'>🏆 Congrats! You won {position + 1}. place!</h2>
+      <h2 className='font-bold text-lg'>🏆 Congrats! You won {position}. place!</h2>
       <button className='btn btn-accent' onClick={() => claimPrize(challengeId)} disabled={isConfirmed || isConfirming}>
         {isPending ? <span className='loading loading-spinner loading-sm'></span> : 'Claim prize'}
       </button>
@@ -53,7 +53,7 @@ const ClaimPrize: React.FC<{ challengeId: number; position: number }> = (props) 
           <Link href='/user-profile'>
             <div className='badge badge-outline bg-success'>
               <CheckCircleOutlinedIcon fontSize='small' />
-              Prize claimed. Check profile stats.
+              Prize claimed
             </div>
           </Link>
         </div>

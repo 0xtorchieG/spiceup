@@ -5,10 +5,12 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { type BaseError, useReadContract, useAccount, useWriteContract, useWaitForTransactionReceipt } from 'wagmi'
 import { contractAddress, spiceUpAbi } from '@/utils/contractDetails'
-import { erc20Abi, fanTokenAbi } from '@/utils/fanTokens'
+import { fanTokenAbi } from '@/utils/fanTokens'
 import LockOpenIcon from '@mui/icons-material/LockOpen'
 import LockPersonIcon from '@mui/icons-material/LockPerson'
 import ChallengeDetails from './challenge-details'
+import { ethers } from 'ethers'
+import { PaymasterMode } from '@biconomy/paymaster'
 
 interface Challenge {
   id: bigint
@@ -27,9 +29,10 @@ interface Challenge {
 
 interface CardProps {
   challengeId: number
+  smartAccount: any
 }
 
-const Card: React.FC<CardProps> = ({ challengeId }) => {
+const Card: React.FC<CardProps> = ({ challengeId, smartAccount }) => {
   const [challenges, setChallenges] = useState<Challenge[]>([])
   const [challengeLiveChecker, setChallengeLiveChecker] = useState<boolean>(false)
   const [hasEntered, setHasEntered] = useState<boolean>(false)
@@ -37,6 +40,7 @@ const Card: React.FC<CardProps> = ({ challengeId }) => {
   const [tokenForGating, setTokenForGating] = useState<string>()
   const [ownsGatingToken, setOwnsGatingToken] = useState<boolean>(false)
   const [imageURL, setImageURL] = useState<string>('')
+  const [contract, setContract] = useState<any>()
 
   const challengeTypes = ['Run: Distance', 'Run: Time', 'Heartrate']
   const challengeMetric = { 'Run: Distance': 'km', 'Run: Time': 'mins', Heartrate: 'bpm' }
@@ -68,13 +72,39 @@ const Card: React.FC<CardProps> = ({ challengeId }) => {
     args: [address as `0x${string}`],
   })
 
-  const enterChallenge = async (challengeId: number) => {
-    writeContract({
-      address: contractAddress,
-      abi: spiceUpAbi,
-      functionName: 'enterChallenge',
-      args: [BigInt(challengeId)],
-    })
+  const enterChallenge = async (challengeId: number, smartAccount: any, contract: any) => {
+    if (smartAccount) {
+      const toAddress = contractAddress // Replace with your contract address
+      const spiceUpContractInterface = new ethers.Interface(spiceUpAbi)
+      const transactionData = spiceUpContractInterface.encodeFunctionData('enterChallenge', [BigInt(challengeId)])
+      console.log(transactionData)
+      // Build the transaction
+      const tx = {
+        to: toAddress,
+        data: transactionData,
+      }
+
+      try {
+        const userOp = await smartAccount.buildUserOp([tx], {
+            paymasterServiceData: {
+            mode: PaymasterMode.SPONSORED,
+        },
+        })
+        const userOpResponse = await smartAccount.sendUserOp(userOp)
+        const transactionDetails = await userOpResponse.wait()
+        console.log('Transaction details:', transactionDetails)
+        console.log('Transaction hash:', transactionDetails.receipt.transactionHash)
+      } catch (e) {
+        console.error('Error executing transaction:', e)
+      }
+    } else {
+      writeContract({
+        address: contractAddress,
+        abi: spiceUpAbi,
+        functionName: 'enterChallenge',
+        args: [BigInt(challengeId)],
+      })
+    }
   }
 
   const formatTimestamp = (timestamp: bigint): string => {
@@ -173,6 +203,11 @@ const Card: React.FC<CardProps> = ({ challengeId }) => {
     }
   }, [hasBalance.data])
 
+  useEffect(() => {
+    const spiceUpContract = new ethers.Contract(contractAddress, spiceUpAbi)
+    setContract(spiceUpContract)
+  }, [])
+
   return (
     <div>
       {challenges.map((challenge) => (
@@ -261,7 +296,7 @@ const Card: React.FC<CardProps> = ({ challengeId }) => {
                   disabled={
                     !challengeLiveChecker || (challenge.tokenGateEnabled && ownsGatingToken !== true) || isConfirmed
                   }
-                  onClick={() => enterChallenge(challengeId)}>
+                  onClick={() => enterChallenge(challengeId, smartAccount, contract)}>
                   {isPending ? <span className='loading loading-spinner loading-sm'></span> : ''}
                   {!challengeLiveChecker && !isConfirming && !isConfirmed ? buttonLabel : 'Enter Challenge'}
                   {error && (

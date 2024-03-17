@@ -12,8 +12,6 @@ export default function Home() {
   const [challengeIds, setChallengeIds] = useState<number[]>([])
 
   const smartAccount = useSmartAccount()
-  console.log('the smartAccount is')
-  console.log(smartAccount)
 
   const getChallengeCount = useReadContract({
     abi: spiceUpAbi,
@@ -34,10 +32,9 @@ export default function Home() {
   return (
     <div className='p-8 ml-0'>
       <h1 className='font-bold text-xl'>All challenges</h1>
-      {smartAccount && <p>Smart Account Address: {smartAccount.entryPointAddress}</p>}
       <div className='grid grid-cols-3 gap-6'>
         {challengeIds.map((challengeId) => (
-          <Card key={challengeId} challengeId={challengeId} />
+          <Card key={challengeId} challengeId={challengeId} smartAccount={smartAccount} />
         ))}
       </div>
     </div>
