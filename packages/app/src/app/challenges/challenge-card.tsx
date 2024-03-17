@@ -86,9 +86,9 @@ const Card: React.FC<CardProps> = ({ challengeId, smartAccount }) => {
 
       try {
         const userOp = await smartAccount.buildUserOp([tx], {
-            paymasterServiceData: {
+          paymasterServiceData: {
             mode: PaymasterMode.SPONSORED,
-        },
+          },
         })
         const userOpResponse = await smartAccount.sendUserOp(userOp)
         const transactionDetails = await userOpResponse.wait()
